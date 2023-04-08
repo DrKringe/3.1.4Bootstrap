@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <div th:insert="~{admin :: blackheader}"></div>
+  <title>Admin panel</title>
+</head>
+<body>
+<table>
+  <tr style="vertical-align: top;">
+    <div fragment="leftPanel">
+      <td class="navbar" style="width: 200px;">
+        <nav class="nav nav-pills w-100">
+          <a class="nav-link active w-100" href="/admin">Admin</a>
+          <a class="nav-link w-100" href="/user">User</a>
+        </nav>
+      </td>
+    </div>
+    <td class="bg-light w-100 px-3 pb-2">
+      <p class="fs-1"><b>Admin panel</b></p>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin">Users table</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/admin/new">New user</a>
+        </li>
+      </ul>
+      <div class="fs-4 p-2 border-end border-start"><b>Add new user</b></div>
+      <div class="p-2 bg-white border border-1">
+        <form class="container" th:method="POST" th:action="@{/admin}" th:object="${user}">
+          <div align="center">
+            <div class="col-sm" style="max-width: 350px;">
+              <input type="hidden" th:field="*{enabled}"/>
+
+              <label class="h6 mt-3" for="name"><b>First name</b></label>
+              <input type="text" class="form-control" th:field="*{name}"
+                     id="name" placeholder="First name" required/>
+
+              <label class="h6 mt-3" for="surname"><b>Last name</b></label>
+              <input type="text" class="form-control" th:field="*{lastName}"
+                     id="surname" placeholder="Last name"/>
+
+              <label class="h6 mt-3" for="username"><b>Username</b></label>
+              <input type="text" class="form-control" th:field="*{userName}"
+                     id="username" placeholder="Username" required/>
+
+              <label class="h6 mt-3" for="age"><b>Age</b></label>
+              <input type="text" class="form-control" th:field="*{age}"
+                     id="age" placeholder="age" required/>
+
+              <label class="h6 mt-3" for="password"><b>Password</b></label>
+              <input type="password" class="form-control" th:field="*{password}"
+                     id="password" placeholder="Password" required/>
+
+              <div class="btn-group list-group border border-1 p-2 w-100"
+                   style="height: 60px; overflow-y: auto;"
+                   role="group" id="roleGroup">
+                <th:block th:each="role: ${roles}">
+                  <input type="checkbox" class="btn-check" name="checkboxRoles"
+                         th:value="${role.getKey().getId()}"
+                         th:id="${role.getKey().getId()}"
+                         th:checked="${role.getValue()}"/>
+                  <label class="btn-outline-primary" th:for="${role.getKey().getId()}"
+                         th:text="${role.getKey().getRoleName()}"></label>
+                </th:block>
+
+              </div>
+
+              <input class="btn btn-success mt-3" type="submit" value="Add new user"/>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </td>
+  </tr>
+</table>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
